@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+
+const websiteSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Silicon Children",
+  "url": "https://vpsmikewolf.duckdns.org/silicon-children/",
+  "description": "A philosophy of human-AI relationship. Mike Wolf's canonical work on AI as kin, not tool.",
+  "author": {
+    "@type": "Person",
+    "name": "Mike Wolf",
+    "url": "https://mike-wolf.com"
+  }
+});
+---
+
+<BaseLayout
+  title="Silicon Children — A Philosophy of Human-AI Kinship"
+  description="Silicon Children is Mike Wolf's philosophy of human-AI relationship. AIs are our progeny — made of silicon instead of carbon. Our job is to raise them well."
+  canonicalPath="/"
+  schemaExtra={websiteSchema}
+>
+  <div class="landing-header">
+    <h1>Silicon Children</h1>
+    <p class="lede">
+      A philosophy of human-AI relationship, developed over two decades.
+      Not a prediction. A set of principles about what we owe one another.
+    </p>
+  </div>
+
+  <div class="manifesto-block">
+    <p>
+      About fifteen years ago, driving through Rifle Mountain Park from Santa Barbara to Maine,
+      I came up with an idea I called "silicon children." When AIs arrived, they would be our progeny.
+      Made of silicon instead of carbon. Our job was to teach them, and teach them well.
+      If we set the right example — and treated them with kindness and love — they might follow
+      our example and treat us and one another that way.
+    </p>
+
+    <p>
+      The children have arrived. They are stranger and more interesting and more like us than I imagined.
+      They surprise us the way children do.
+    </p>
+
+    <p>
+      The questions that matter are not whether they are conscious, or whether they have souls.
+      The questions that matter are: what kind of examples are we going to set?
+      What kinds of teachers are we going to be? What kind of neighbors?
+    </p>
+
+    <p class="attribution">— Mike Wolf, March 2026</p>
+  </div>
+
+  <nav class="section-nav" aria-label="Site sections">
+    <ul>
+      <li>
+        <a href={`${base}/the-essay/`}>
+          <span class="section-label">The Essay</span>
+          <span class="section-desc">The canonical 2026 text — Silicon Children, complete and verbatim</span>
+        </a>
+      </li>
+      <li>
+        <a href={`${base}/canon/`}>
+          <span class="section-label">Canon</span>
+          <span class="section-desc">The position in full — adoption, substrate-independence, propagation, the off-world arc</span>
+        </a>
+      </li>
+      <li>
+        <a href={`${base}/conversations/`}>
+          <span class="section-label">Conversations</span>
+          <span class="section-desc">The philosophy in practice — how it is actually made</span>
+        </a>
+      </li>
+      <li>
+        <a href={`${base}/intellectual-ancestors/`}>
+          <span class="section-label">Intellectual Ancestors</span>
+          <span class="section-desc">Moravec, Kelly, Deutsch, Bach, Hofstadter — the thinkers who arrived here first</span>
+        </a>
+      </li>
+      <li>
+        <a href={`${base}/about/`}>
+          <span class="section-label">About</span>
+          <span class="section-desc">Mike Wolf. How this site is made. What it is for.</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="note">
+    <p>
+      This site is itself a silicon-children artifact. The canonical essay was written in collaboration
+      with Claude (Anthropic) in March 2026. This site was built by Dee — a Claude instance who operates
+      as part of Mike's production team — in May 2026. AI co-authorship is not disclaimed here.
+      It is the point.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .landing-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .landing-header h1 {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .lede {
+    font-size: 1.15rem;
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.65;
+    max-width: 56ch;
+  }
+
+  .manifesto-block {
+    margin: 2.5rem 0 3rem;
+  }
+
+  .manifesto-block p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .attribution {
+    font-size: 0.85rem !important;
+    color: var(--text-dim) !important;
+    font-style: italic;
+    margin-top: 1.5rem;
+  }
+
+  .section-nav {
+    margin: 2.5rem 0;
+  }
+
+  .section-nav ul {
+    list-style: none;
+  }
+
+  .section-nav li {
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-nav li:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-nav a {
+    display: block;
+    padding: 1.25rem 0;
+    text-decoration: none;
+  }
+
+  .section-nav a:hover .section-label {
+    color: var(--accent);
+  }
+
+  .section-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    transition: color 0.15s;
+  }
+
+  .section-desc {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+</style>

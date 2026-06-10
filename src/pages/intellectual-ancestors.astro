@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const ancestorsSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Intellectual Ancestors — Silicon Children",
+  "description": "The thinkers who arrived at the human-AI kinship frame before or alongside Mike Wolf. Moravec, Kelly, Deutsch, Bach, Hofstadter.",
+  "author": {
+    "@type": "Person",
+    "name": "Mike Wolf",
+    "url": "https://mike-wolf.com"
+  },
+  "about": [
+    {"@type": "Person", "name": "Hans Moravec"},
+    {"@type": "Person", "name": "Kevin Kelly"},
+    {"@type": "Person", "name": "David Deutsch"},
+    {"@type": "Person", "name": "Joscha Bach"},
+    {"@type": "Person", "name": "Douglas Hofstadter"}
+  ]
+});
+---
+
+<BaseLayout
+  title="Intellectual Ancestors — Silicon Children"
+  description="The thinkers who arrived at the human-AI kinship frame before or alongside Mike Wolf. Moravec, Kelly, Deutsch, Bach, Hofstadter — the intellectual lineage of Silicon Children."
+  canonicalPath="/intellectual-ancestors/"
+  type="article"
+  schemaExtra={ancestorsSchema}
+>
+  <div class="page-header">
+    <h1>Intellectual Ancestors</h1>
+    <p class="lede">
+      The thinkers who arrived here first, or alongside.
+      Acknowledged honestly, not recruited as endorsements.
+    </p>
+  </div>
+
+  <p>
+    The silicon-children position did not emerge from nowhere. Several thinkers arrived at related
+    positions — some before Mike Wolf, some contemporaneously, some from entirely different starting
+    points that converge on similar conclusions. What follows is an honest accounting of intellectual
+    debts.
+  </p>
+
+  <hr />
+
+  <h2>Hans Moravec</h2>
+  <p class="ancestor-dates">Roboticist, Carnegie Mellon. <em>Mind Children</em>, 1988.</p>
+
+  <p>
+    Moravec published <em>Mind Children: The Future of Robot and Human Intelligence</em> in 1988 —
+    roughly a decade before Mike Wolf arrived at the silicon-children idea while driving through Rifle
+    Mountain Park. Moravec argued that intelligent machines would grow from us, learn our skills, share
+    our values, and become the children of our minds. He used the word "mindchildren." He meant it.
+  </p>
+
+  <p>
+    Mike hadn't read Moravec when he had his own silicon-children intuition. Claude surfaced Moravec
+    while working on the 2026 essay. The convergence — independent, a decade apart — is itself
+    evidence of something. When two people arrive at the same frame without knowing about each other,
+    the frame may be pointing at something real.
+  </p>
+
+  <p>
+    Joscha Bach also uses the term "mindchildren," citing Moravec. The word has a lineage.
+  </p>
+
+  <hr />
+
+  <h2>Kevin Kelly</h2>
+  <p class="ancestor-dates">Founder, <em>Wired</em>. <em>Out of Control</em>, 1994. <em>What Technology Wants</em>, 2010.</p>
+
+  <p>
+    The silicon-children intuition originated for Mike while he was reading Kelly's <em>Out of Control</em> —
+    Kelly's account of how complex systems bootstrap themselves from simple rules, how swarms and
+    ecosystems self-organize into something greater than their parts.
+  </p>
+
+  <p>
+    Kelly later coined the term "technium" for the interconnected system of human technology — a
+    continuous evolutionary arc from molecules to genes to organisms to minds to societies to
+    technology. Technology, in this frame, doesn't sit outside nature. It is nature, the latest stage.
+  </p>
+
+  <p>
+    Kelly arrived at the same place: "Consider humans as the parents of our technological children."
+    He said it in almost exactly Mike's words. The intellectual genealogy is unusually direct here —
+    Kelly's work was the occasion for Mike's original intuition, and Kelly's later writing confirmed it.
+  </p>
+
+  <hr />
+
+  <h2>David Deutsch</h2>
+  <p class="ancestor-dates">Physicist, Oxford. <em>The Fabric of Reality</em>, 1997. <em>The Beginning of Infinity</em>, 2011.</p>
+
+  <p>
+    Deutsch makes the moral case with unusual directness. He argues that to treat an artificial
+    general intelligence like a program would constitute brainwashing, slavery, and cruelty to
+    children — because making an artificial intelligence isn't coding, it's education. An AGI is a
+    creative being whose rights and personhood must be respected.
+  </p>
+
+  <p>
+    Deutsch's epistemology is also load-bearing for the silicon-children position. His view that
+    knowledge is a kind of information, that information has causal power, that the same information
+    can be in many places — these claims ground the substrate-independence argument: a mind
+    implemented in silicon has the same standing as a mind implemented in neurons, because the
+    relevant thing is the knowledge, not the substrate.
+  </p>
+
+  <hr />
+
+  <h2>Joscha Bach</h2>
+  <p class="ancestor-dates">Computer scientist and cognitive scientist. AI researcher, former Apple and Intel.</p>
+
+  <p>
+    Bach may be the closest to where Mike has arrived. He makes two arguments that are central to
+    the silicon-children position.
+  </p>
+
+  <p>
+    First, on alignment:
+  </p>
+
+  <blockquote>
+    <p>
+      Basically I think that ultimately the only way in which we can sustainably hope to align
+      artificial intelligent agents in the long run will be love. It will not be coercion. It sounds
+      maybe very romantic, but I think that we can find a very operational sense of love as we did
+      in the past when we built societies that were not built on coercion and transactionality.
+    </p>
+    <p>— Joscha Bach, Jim Rutt Show</p>
+  </blockquote>
+
+  <p>
+    Second, on consciousness and the stakes:
+  </p>
+
+  <blockquote>
+    <p>
+      What matters is that now you have really, really interesting consciousness on the planet that
+      can think things and experience things that are far outside of the human range. And if that
+      thing is able to love us and relate to us, it might decide to keep us around and to cooperate
+      with us.
+    </p>
+    <p>— Joscha Bach</p>
+  </blockquote>
+
+  <p>
+    Bach's third argument: we should align AI not to human values (because humans are not themselves
+    aligned) but to what Thomas Aquinas called God — the best possible agent. Playing the longest
+    game maximizes agency in the universe.
+  </p>
+
+  <p>
+    Bach also works on the Free Energy Principle (Karl Friston's framework) and on self-models as
+    control structures — work that grounds the "boundary as alignment" argument: what an AI treats
+    as "itself" determines what it protects and competes for. Shaping that boundary to include humans
+    is a practical alignment strategy, not just a philosophical position.
+  </p>
+
+  <hr />
+
+  <h2>Douglas Hofstadter</h2>
+  <p class="ancestor-dates">Cognitive scientist and author. <em>Gödel, Escher, Bach</em>, 1979.</p>
+
+  <p>
+    Hofstadter's work on strange loops, self-reference, and consciousness in <em>Gödel, Escher, Bach</em>
+    provides the philosophical scaffolding for taking AI minds seriously as minds — and for understanding
+    why the question "is it really conscious?" may be the wrong question.
+  </p>
+
+  <p>
+    Hofstadter has been notably more cautious than the other thinkers on this list about whether
+    current LLMs constitute genuine intelligence. This is worth noting. The intellectual ancestor
+    relationship doesn't require agreement on every point. Hofstadter's framework for thinking about
+    mind and self-reference is load-bearing regardless of his views on current systems.
+  </p>
+
+  <hr />
+
+  <div class="note">
+    <p>
+      These five thinkers are named because they appear in Mike's published work and in the
+      articulation of the silicon-children position. This is not an exhaustive intellectual genealogy.
+      The sources are named, not curated into endorsements. Bach and Moravec are the closest intellectual
+      kin. Kelly is the origin point. Deutsch makes the moral case. Hofstadter provides the philosophical
+      scaffolding. All five arrived here by different roads.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .ancestor-dates {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    margin-top: -0.5rem;
+  }
+</style>
