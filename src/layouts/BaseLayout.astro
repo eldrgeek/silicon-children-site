@@ -46,6 +46,7 @@ const baseSchema = {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="author" content="Mike Wolf" />
   <link rel="canonical" href={canonicalURL} />
 
@@ -98,7 +99,7 @@ const baseSchema = {
     }
 
     html {
-      font-size: 18px;
+      font-size: 19px;
       scroll-behavior: smooth;
     }
 
@@ -106,8 +107,12 @@ const baseSchema = {
       background: var(--bg);
       color: var(--text);
       font-family: var(--font-serif);
-      line-height: 1.75;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+    }
+
+    @media (max-width: 640px) {
+      html { font-size: 17px; }
     }
 
     /* ── NAV ── */
@@ -374,8 +379,8 @@ const baseSchema = {
       domain: { name: 'Silicon Children' },
       theme: { primary: '#c9a96e' },
       endpoints: {
-        ask: 'https://siliconchildren-org.netlify.app/.netlify/functions/ask',
-        feedback: 'https://siliconchildren-org.netlify.app/.netlify/functions/feedback',
+        ask: '/.netlify/functions/guide',
+        feedback: '/.netlify/functions/feedback',
       },
     };
   </script>
