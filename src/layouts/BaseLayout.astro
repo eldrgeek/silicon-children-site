@@ -342,6 +342,15 @@ const baseSchema = {
       }
     }
   </style>
+  <!-- SOMA in-place editing -->
+  <script is:inline src="https://soma-guide.netlify.app/soma-owner.js"></script>
+  <script is:inline>
+    window.SomaEditConfig = {
+      siteId: 'silicon-children',
+      feedbackUrl: '/.netlify/functions/feedback',
+    };
+  </script>
+  <script is:inline src="https://soma-guide.netlify.app/soma-edit.js"></script>
 </head>
 <body>
   <nav>
