@@ -99,7 +99,7 @@ const baseSchema = {
     }
 
     html {
-      font-size: 19px;
+      font-size: 20px;
       scroll-behavior: smooth;
     }
 
@@ -112,7 +112,7 @@ const baseSchema = {
     }
 
     @media (max-width: 640px) {
-      html { font-size: 17px; }
+      html { font-size: 18px; }
     }
 
     /* ── NAV ── */
@@ -196,7 +196,8 @@ const baseSchema = {
 
     p {
       margin-bottom: 1.4rem;
-      font-size: 1rem;
+      font-size: 1.15rem;
+      line-height: 1.75;
       color: var(--text);
     }
 
@@ -345,15 +346,14 @@ const baseSchema = {
 <body>
   <nav>
     <div class="nav-inner">
-      <a class="site-title" href={`${base}/`}>Silicon Children</a>
+      <a class="site-title" href="/">Silicon Children</a>
       <ul>
-        <li><a href={`${base}/`}>Manifesto</a></li>
-        <li><a href={`${base}/co-evolution/`}>Co-Evolution</a></li>
-        <li><a href={`${base}/brain-trust/`}>Brain Trust</a></li>
+        <li><a href="/">Manifesto</a></li>
+        <li><a href="/co-evolution/">Co-Evolution</a></li>
+        <li><a href="/brain-trust/">Brain Trust</a></li>
         <li><a href="https://ai-wtf.org">Commons</a></li>
-        <li><a href={`${base}/the-essay/`}>The Essay</a></li>
-        <li><a href={`${base}/canon/`}>Canon</a></li>
-        <li><a href={`${base}/about/`}>About</a></li>
+        <li><a href="/canon/">Canon</a></li>
+        <li><a href="/about/">About</a></li>
       </ul>
     </div>
   </nav>
