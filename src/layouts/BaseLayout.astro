@@ -10,8 +10,8 @@ interface Props {
 
 const { title, description, canonicalPath, type = 'website', publishDate, schemaExtra } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const canonicalURL = `https://vpsmikewolf.duckdns.org/silicon-children${canonicalPath}`;
-const ogImage = `https://vpsmikewolf.duckdns.org/silicon-children/og-image.png`;
+const canonicalURL = new URL(canonicalPath, Astro.site).href;
+const ogImage = new URL('/og-image.png', Astro.site).href;
 
 const personSchema = {
   "@type": "Person",
@@ -34,7 +34,7 @@ const baseSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Silicon Children",
-    "url": "https://vpsmikewolf.duckdns.org/silicon-children/"
+    "url": new URL('/', Astro.site).href
   },
   ...(publishDate ? { "datePublished": publishDate } : {}),
 };

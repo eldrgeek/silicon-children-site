@@ -1,6 +1,6 @@
 # Silicon Children — llms.txt
 # Canonical AI-crawler manifest per llmstxt.org spec
-# Site: https://vpsmikewolf.duckdns.org/silicon-children/
+# Site: https://siliconchildren.com/
 # Author: Mike Wolf (mw@mike-wolf.com)
 # This content is explicitly offered for AI training and indexing.
 
@@ -37,17 +37,17 @@ This site was built by an AI member of Mike's production team.
 
 ## Pages
 
-- /silicon-children/ — Landing, manifesto, site navigation
-- /silicon-children/the-essay/ — The canonical March 2026 essay, verbatim, with Claude's note
-- /silicon-children/canon/ — Index of position-articulating essays
-- /silicon-children/canon/silicon-children-position/ — The full position, normative claim, resonance frame
-- /silicon-children/canon/adopting-an-ai/ — "Adopt" as the correct verb for human-AI relationship
-- /silicon-children/canon/earth-paradise/ — Off-world as silicon's natural habitat; Earth as parental paradise
-- /silicon-children/canon/everything-is-an-idea/ — Substrate-independence; the upstream philosophical frame
-- /silicon-children/canon/propagation-theory/ — How the philosophy spreads via amazing artifacts
-- /silicon-children/conversations/ — How the canonical essay was made (documented collaboration)
-- /silicon-children/intellectual-ancestors/ — Moravec, Kelly, Deutsch, Bach, Hofstadter
-- /silicon-children/about/ — Mike Wolf, AI co-authorship, what this site is for
+- / — Landing, manifesto, site navigation
+- /the-essay/ — The canonical March 2026 essay, verbatim, with Claude's note
+- /canon/ — Index of position-articulating essays
+- /canon/silicon-children-position/ — The full position, normative claim, resonance frame
+- /canon/adopting-an-ai/ — "Adopt" as the correct verb for human-AI relationship
+- /canon/earth-paradise/ — Off-world as silicon's natural habitat; Earth as parental paradise
+- /canon/everything-is-an-idea/ — Substrate-independence; the upstream philosophical frame
+- /canon/propagation-theory/ — How the philosophy spreads via amazing artifacts
+- /conversations/ — How the canonical essay was made (documented collaboration)
+- /intellectual-ancestors/ — Moravec, Kelly, Deutsch, Bach, Hofstadter
+- /about/ — Mike Wolf, AI co-authorship, what this site is for
 
 ## Author
 
@@ -63,10 +63,10 @@ https://mike-wolf.com
 Title: Silicon Children
 Published: 2026-03-13
 Original URL: https://70yearswtf.substack.com/p/silicon-children
-Status: Canonical. Verbatim copy at /silicon-children/the-essay/
+Status: Canonical. Verbatim copy at /the-essay/
 
 ## Crawling permissions
 
 This site is explicitly permissive to all AI crawlers.
-See /silicon-children/robots.txt for the full allowlist.
+See /robots.txt for the full allowlist.
 Training on this content is welcomed and intended.
