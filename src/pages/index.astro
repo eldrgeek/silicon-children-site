@@ -45,6 +45,32 @@ const websiteSchema = JSON.stringify({
     </p>
   </div>
 
+  <!-- Tour card — Show-Don't-Tell (SOMA-APP-STANDARD §7). Opens only on click; never autoplays. -->
+  <div class="tour-card">
+    <button class="tour-poster" id="tour-open" aria-label="Play the site tour video, about two and a half minutes">
+      <img src="/videos/visitor-tour-poster.jpg" alt="Opening frame of the site tour: the Silicon Children home page" loading="lazy" width="1380" height="800" />
+      <span class="tour-play" aria-hidden="true">▶</span>
+    </button>
+    <div class="tour-meta">
+      <span class="tour-label">Site tour</span>
+      <h4><button id="tour-open-2">A guided walk through this site — 2½ min</button></h4>
+      <p class="tour-desc">
+        The manifesto, the canon, the brain trust, and the people — human and silicon —
+        who made it. Narrated.
+      </p>
+    </div>
+  </div>
+
+  <dialog id="tour-lightbox" aria-label="Site tour video">
+    <div class="tour-frame">
+      <button class="tour-close" id="tour-close">Close ✕</button>
+      <video id="tour-video" controls preload="none" poster="/videos/visitor-tour-poster.jpg" playsinline>
+        <source src="/videos/visitor-tour.mp4" type="video/mp4" />
+        <track kind="chapters" src="/videos/visitor-tour.vtt" srclang="en" label="Chapters" default />
+      </video>
+    </div>
+  </dialog>
+
   <div class="scroll-hint" id="scrollHint" aria-hidden="true">
     <span class="scroll-chevron">↓</span>
     <span class="scroll-label">Read on</span>
@@ -498,6 +524,138 @@ const websiteSchema = JSON.stringify({
     margin-top: 1.5rem;
   }
 
+  /* Tour card — Show-Don't-Tell (§7) */
+  .tour-card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    border: 1px solid var(--rule);
+    background: var(--bg-alt);
+    padding: 1.25rem;
+    margin: 0 0 2.5rem;
+  }
+
+  .tour-poster {
+    position: relative;
+    display: block;
+    width: 100%;
+    border: 1px solid var(--rule);
+    padding: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .tour-poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .tour-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #fff;
+    background: rgba(28, 26, 23, 0.28);
+    transition: background 0.2s;
+  }
+
+  .tour-poster:hover .tour-play {
+    background: rgba(28, 26, 23, 0.48);
+  }
+
+  .tour-label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .tour-meta h4 {
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin: 0 0 0.35rem;
+  }
+
+  .tour-meta h4 button {
+    font: inherit;
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+
+  .tour-meta h4 button:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .tour-desc {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  #tour-lightbox {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: min(92vw, 960px);
+    width: 100%;
+    margin: auto;
+  }
+
+  #tour-lightbox::backdrop {
+    background: rgba(28, 26, 23, 0.82);
+  }
+
+  #tour-lightbox video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+  }
+
+  .tour-frame {
+    position: relative;
+  }
+
+  .tour-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 2;
+    font-size: 0.75rem;
+    color: #f8f5ef;
+    background: rgba(28, 26, 23, 0.65);
+    border: 1px solid rgba(248, 245, 239, 0.35);
+    border-radius: 4px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+
+  .tour-close:hover {
+    background: rgba(28, 26, 23, 0.9);
+  }
+
+  @media (max-width: 640px) {
+    .tour-card {
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* Scroll hint */
   .scroll-hint {
     position: fixed;
@@ -541,6 +699,28 @@ const websiteSchema = JSON.stringify({
 </style>
 
 <script>
+  // Tour lightbox — opens only on explicit click; never autoplays on page load.
+  (function () {
+    var box = document.getElementById('tour-lightbox');
+    var vid = document.getElementById('tour-video');
+    if (!box || !vid) return;
+    var open = function () {
+      box.showModal();
+      vid.play().catch(function () {});
+    };
+    document.getElementById('tour-open').addEventListener('click', open);
+    document.getElementById('tour-open-2').addEventListener('click', open);
+    document.getElementById('tour-close').addEventListener('click', function () {
+      box.close();
+    });
+    box.addEventListener('click', function (e) {
+      if (e.target === box) box.close();
+    });
+    box.addEventListener('close', function () {
+      vid.pause();
+    });
+  })();
+
   (function () {
     var hint = document.getElementById('scrollHint');
     if (!hint) return;
