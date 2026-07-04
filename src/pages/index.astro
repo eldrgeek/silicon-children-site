@@ -64,7 +64,7 @@ const websiteSchema = JSON.stringify({
   <dialog id="tour-lightbox" aria-label="Site tour video">
     <div class="tour-frame">
       <button class="tour-close" id="tour-close">Close ✕</button>
-      <video id="tour-video" controls preload="none" poster="/videos/visitor-tour-poster.jpg" playsinline>
+      <video id="tour-video" controls preload="metadata" poster="/videos/visitor-tour-poster.jpg" playsinline>
         <source src="/videos/visitor-tour.mp4" type="video/mp4" />
         <track kind="chapters" src="/videos/visitor-tour.vtt" srclang="en" label="Chapters" default />
       </video>
