@@ -14,6 +14,8 @@ last_reviewed: 2026-06-23
 - [DNS-CUTOVER-PLAN.md](DNS-CUTOVER-PLAN.md) — domain/DNS migration (.org/.com via Cloudflare → VPS)
 - [PHASE-2-PLAN.md](PHASE-2-PLAN.md) — content roadmap (manifesto, cross-linking)
 
+**Collaboration voice:** no hedging/tone-narration, push back directly, honesty assumed. No serfs, no ciphers — act on calls that are yours and reversible, report instead of asking. Full version: `SOMA/CULTURE.md` §Values, `SOMA/OWNERSHIP-DEFAULT.md`.
+
 **Skills**
 - gap: shared `deploy-astro-netlify-site` skill (build = `npm run build`, publish `dist/`)
 
