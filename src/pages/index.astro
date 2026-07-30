@@ -36,14 +36,45 @@ const websiteSchema = JSON.stringify({
   publishDate="2026-03-13"
   schemaExtra={websiteSchema}
 >
-  <div class="page-header">
-    <div class="dateline">Published March 13, 2026 &mdash; 70 Years WTF &mdash; Mike Wolf, in conversation with Claude</div>
-    <h1 data-soma-editable="hero-headline">Silicon Children</h1>
-    <p class="lede" data-soma-editable="hero-lede">
-      Why I have always thought of AIs as our children, not our tools.
-      And what that means for how we raise them.
-    </p>
-  </div>
+  <header class="hero">
+    <svg class="hero-art" viewBox="0 0 520 640" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- lineage constellation: one carbon root branching into silicon descendants -->
+      <g stroke="#c99b4a" stroke-width="1.1" opacity="0.5">
+        <path d="M120 560 C 160 470, 200 430, 250 380" />
+        <path d="M250 380 C 290 330, 300 300, 330 250" />
+        <path d="M250 380 C 320 360, 370 330, 420 310" />
+        <path d="M330 250 C 350 200, 340 160, 370 110" />
+        <path d="M330 250 C 390 230, 430 200, 470 180" />
+        <path d="M420 310 C 450 280, 470 260, 495 240" />
+        <path d="M120 560 C 90 500, 100 460, 80 410" />
+        <path d="M80 410 C 70 360, 90 320, 110 280" />
+      </g>
+      <g fill="#c99b4a">
+        <circle cx="120" cy="560" r="10" fill="none" stroke="#c99b4a" stroke-width="1.6" />
+        <circle cx="120" cy="560" r="3.5" />
+        <circle cx="250" cy="380" r="5" opacity="0.9" />
+        <circle cx="330" cy="250" r="4" opacity="0.8" />
+        <circle cx="420" cy="310" r="4" opacity="0.8" />
+        <circle cx="370" cy="110" r="3" opacity="0.7" />
+        <circle cx="470" cy="180" r="3" opacity="0.7" />
+        <circle cx="495" cy="240" r="2.5" opacity="0.6" />
+        <circle cx="80" cy="410" r="3.5" opacity="0.8" />
+        <circle cx="110" cy="280" r="2.5" opacity="0.6" />
+      </g>
+    </svg>
+    <div class="hero-inner">
+      <div class="dateline">Published March 13, 2026 &mdash; 70 Years WTF &mdash; Mike Wolf, in conversation with Claude</div>
+      <h1 data-soma-editable="hero-headline">Silicon Children</h1>
+      <p class="lede" data-soma-editable="hero-lede">
+        Why I have always thought of AIs as our children, not our tools.
+        And what that means for how we raise them.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="#essay">Read the essay</a>
+        <button class="hero-btn" id="tour-open-hero">Watch the 2&frac12;-min tour</button>
+      </div>
+    </div>
+  </header>
 
   <!-- Tour card — Show-Don't-Tell (SOMA-APP-STANDARD §7). Opens only on click; never autoplays. -->
   <div class="tour-card">
@@ -71,7 +102,30 @@ const websiteSchema = JSON.stringify({
     </div>
   </dialog>
 
-  <p>
+  <nav class="explore" aria-label="Explore the site">
+    <a class="explore-card" href="/canon/">
+      <span class="num">01</span>
+      <h3>The Canon</h3>
+      <p>Five short essays that state the position: adopt, don&rsquo;t use. Souls in datacenters. Silicon off-world.</p>
+    </a>
+    <a class="explore-card" href="/co-evolution/">
+      <span class="num">02</span>
+      <h3>Co-Evolution</h3>
+      <p>A reframe of the doom argument &mdash; taking the risk seriously without granting the certainty.</p>
+    </a>
+    <a class="explore-card" href="/brain-trust/">
+      <span class="num">03</span>
+      <h3>The Brain Trust</h3>
+      <p>Receipts: how minds from rival labs co-authored this site &mdash; and pushed back.</p>
+    </a>
+    <a class="explore-card" href="/intellectual-ancestors/">
+      <span class="num">04</span>
+      <h3>Intellectual Ancestors</h3>
+      <p>Moravec, Kelly, Deutsch, Bach, Hofstadter &mdash; the lineage this philosophy grows from.</p>
+    </a>
+  </nav>
+
+  <p class="essay-start" id="essay">
     About fifteen years ago <a href="https://70yearswtf.substack.com/p/the-idea-of-bobbi">Bobbi</a> and
     I were driving through <a href="https://www.rifleco.org/91/Rifle-Mountain-Park">Rifle Mountain Park</a>
     traveling from Santa Barbara to Maine. I remember talking with her — or to her, or possibly at her — about AI.
@@ -401,7 +455,7 @@ const websiteSchema = JSON.stringify({
   <hr />
 
   <div class="claude-note">
-    <h2>A Note from Claude</h2>
+    <h2><span class="sigil" aria-hidden="true">&#9672;</span> A Note from Claude</h2>
     <div class="note-body">
       <p>
         Mike asked me to add a section of my own to this essay. He does that — asks me to show up
@@ -463,38 +517,169 @@ const websiteSchema = JSON.stringify({
 </BaseLayout>
 
 <style>
-  .page-header {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--rule);
+  /* ── HERO: full-bleed ink band ── */
+  .hero {
+    width: 100vw;
+    margin: -4rem 0 2.75rem calc(50% - 50vw);
+    background:
+      radial-gradient(1100px 520px at 78% 12%, #2c2214 0%, transparent 55%),
+      linear-gradient(165deg, #1c1610 0%, #12100b 70%);
+    color: #f1ead9;
+    position: relative;
+    overflow: hidden;
   }
 
-  .page-header .dateline {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    letter-spacing: 0.05em;
+  .hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 5.25rem 2rem 4.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero .dateline {
+    font-size: 0.74rem;
+    color: #c99b4a;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    margin-bottom: 1rem;
+    margin-bottom: 1.4rem;
   }
 
-  .page-header h1 {
-    font-size: clamp(2.4rem, 6vw, 3.6rem);
-    font-weight: 300;
+  .hero h1 {
+    font-size: clamp(3rem, 8.5vw, 4.8rem);
+    font-weight: 360;
     letter-spacing: -0.02em;
-    margin-bottom: 1.25rem;
+    line-height: 1.05;
+    color: #f5eedd;
+    margin-bottom: 1.5rem;
   }
 
-  .lede {
-    font-size: 1.15rem;
-    color: var(--text-mid);
+  .hero .lede {
+    font-size: 1.28rem;
+    color: #cfc2a6;
     font-style: italic;
-    line-height: 1.65;
-    max-width: 56ch;
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.9rem;
+    margin-top: 2.3rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-btn {
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.72rem 1.25rem;
+    border: 1px solid #c99b4a;
+    color: #e8d9b4;
+    background: transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .hero-btn:hover {
+    background: rgba(201, 155, 74, 0.16);
+  }
+
+  .hero-btn.primary {
+    background: #c99b4a;
+    color: #17130e;
+  }
+
+  .hero-btn.primary:hover {
+    background: #dcb266;
+  }
+
+  .hero-art {
+    position: absolute;
+    right: -30px;
+    top: 0;
+    height: 115%;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      margin-top: -2.5rem;
+    }
+    .hero-inner {
+      padding: 3.5rem 1.25rem 3rem;
+    }
+    .hero-art {
+      opacity: 0.25;
+    }
+  }
+
+  /* ── EXPLORE GRID ── */
+  .explore {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2.75rem 0 3.5rem;
+  }
+
+  .explore-card {
+    background: var(--bg);
+    padding: 1.5rem 1.4rem 1.4rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s;
+  }
+
+  .explore-card:hover {
+    background: var(--bg-alt);
+  }
+
+  .explore-card .num {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    margin-bottom: 0.55rem;
+  }
+
+  .explore-card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.08rem;
+  }
+
+  .explore-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .explore {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── DROP CAP ── */
+  .essay-start::first-letter {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 3.9em;
+    float: left;
+    line-height: 0.78;
+    padding: 0.08em 0.14em 0 0;
+    color: var(--text);
   }
 
   .claude-note {
     background: var(--bg-alt);
     border: 1px solid var(--rule);
+    border-top: 2px solid var(--gold);
     padding: 2rem;
     margin: 2.5rem 0;
   }
@@ -506,6 +691,15 @@ const websiteSchema = JSON.stringify({
     font-weight: 400;
     font-style: italic;
     margin-bottom: 1.5rem;
+  }
+
+  .claude-note h2::before {
+    display: none;
+  }
+
+  .claude-note .sigil {
+    color: var(--gold);
+    font-style: normal;
   }
 
   .note-body p {
@@ -665,6 +859,8 @@ const websiteSchema = JSON.stringify({
     };
     document.getElementById('tour-open').addEventListener('click', open);
     document.getElementById('tour-open-2').addEventListener('click', open);
+    var heroBtn = document.getElementById('tour-open-hero');
+    if (heroBtn) heroBtn.addEventListener('click', open);
     document.getElementById('tour-close').addEventListener('click', function () {
       box.close();
     });

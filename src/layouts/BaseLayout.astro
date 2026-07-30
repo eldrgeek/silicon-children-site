@@ -49,6 +49,7 @@ const baseSchema = {
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="author" content="Mike Wolf" />
   <link rel="canonical" href={canonicalURL} />
+  <meta name="color-scheme" content="light dark" />
 
   <!-- Open Graph -->
   <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
@@ -69,27 +70,46 @@ const baseSchema = {
 
   <title>{title}</title>
 
-  <!-- Google Fonts: Source Serif 4 -->
+  <!-- Google Fonts: Fraunces (display) + Source Serif 4 (text) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet" />
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(baseSchema)} />
   {schemaExtra && <script type="application/ld+json" set:html={schemaExtra} />}
 
-  <style>
+  <style is:global>
     :root {
-      --bg: #f8f5ef;
-      --bg-alt: #f2ede4;
-      --text: #1c1a17;
+      --bg: #f7f3ea;
+      --bg-alt: #efe8d9;
+      --text: #201b14;
       --text-mid: #4a4540;
       --text-dim: #57514a;
-      --accent: #5c4a2a;
-      --accent-light: #8b6e3e;
-      --rule: #d8d0c4;
+      --accent: #8a6420;
+      --gold: #b8863b;
+      --gold-soft: #c9a96e;
+      --ink: #17130e;
+      --on-ink: #f1ead9;
+      --on-ink-dim: #b3a68d;
+      --rule: #ddd3c2;
       --max-width: 680px;
       --font-serif: 'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+      --font-display: 'Fraunces', 'Georgia', serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14100b;
+        --bg-alt: #1e1811;
+        --text: #ece3d1;
+        --text-mid: #c6bba6;
+        --text-dim: #9b9080;
+        --accent: #d3ab63;
+        --gold: #c99b4a;
+        --gold-soft: #c9a96e;
+        --rule: #33291b;
+      }
     }
 
     *, *::before, *::after {
@@ -111,18 +131,30 @@ const baseSchema = {
       -webkit-font-smoothing: antialiased;
     }
 
+    ::selection {
+      background: color-mix(in srgb, var(--gold) 32%, transparent);
+    }
+
+    img { max-width: 100%; }
+
     @media (max-width: 640px) {
       html { font-size: 18px; }
     }
 
     /* ── NAV ── */
-    nav {
+    nav.site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
       border-bottom: 1px solid var(--rule);
-      padding: 1.25rem 2rem;
+      padding: 1.1rem 2rem;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
-    nav .nav-inner {
-      max-width: var(--max-width);
+    nav.site-nav .nav-inner {
+      max-width: 62rem;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -131,32 +163,38 @@ const baseSchema = {
       gap: 0.75rem;
     }
 
-    nav .site-title {
+    nav.site-nav .site-title {
+      font-family: var(--font-display);
       font-size: 0.95rem;
       font-weight: 500;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text);
       text-decoration: none;
     }
 
-    nav ul {
+    nav.site-nav .site-title .brand-mark {
+      color: var(--gold);
+      margin-right: 0.4rem;
+    }
+
+    nav.site-nav ul {
       list-style: none;
       display: flex;
-      gap: 1.75rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
     }
 
-    nav ul a {
-      font-size: 0.85rem;
+    nav.site-nav ul a {
+      font-size: 0.82rem;
       color: var(--text-mid);
       text-decoration: none;
       letter-spacing: 0.02em;
       transition: color 0.15s;
     }
 
-    nav ul a:hover {
-      color: var(--text);
+    nav.site-nav ul a:hover {
+      color: var(--accent);
     }
 
     /* ── MAIN ── */
@@ -168,25 +206,38 @@ const baseSchema = {
 
     /* ── TYPOGRAPHY ── */
     h1 {
-      font-size: clamp(1.9rem, 4vw, 2.6rem);
-      font-weight: 400;
-      line-height: 1.25;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: 450;
+      line-height: 1.15;
       color: var(--text);
       margin-bottom: 1.5rem;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
     }
 
     h2 {
-      font-size: 1.4rem;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
       font-weight: 500;
-      line-height: 1.35;
+      line-height: 1.3;
       color: var(--text);
-      margin-top: 3rem;
+      margin-top: 3.2rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    h2::before {
+      content: '';
+      display: block;
+      width: 2.75rem;
+      height: 2px;
+      background: var(--gold);
       margin-bottom: 1rem;
     }
 
     h3 {
-      font-size: 1.1rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
       font-weight: 500;
       line-height: 1.4;
       color: var(--text);
@@ -196,13 +247,13 @@ const baseSchema = {
 
     p {
       margin-bottom: 1.4rem;
-      font-size: 1.15rem;
-      line-height: 1.75;
+      font-size: 1.12rem;
+      line-height: 1.78;
       color: var(--text);
     }
 
     p + h2, p + h3 {
-      margin-top: 2.5rem;
+      margin-top: 2.75rem;
     }
 
     a {
@@ -217,36 +268,64 @@ const baseSchema = {
       text-decoration-color: var(--accent);
     }
 
+    /* Pull-quote treatment */
     blockquote {
-      border-left: 2px solid var(--accent-light);
-      padding: 0.5rem 0 0.5rem 1.5rem;
-      margin: 2rem 0;
-      color: var(--text-mid);
+      position: relative;
+      border-left: none;
+      padding: 0.25rem 0 0.25rem 2.4rem;
+      margin: 2.4rem 0;
+      font-family: var(--font-display);
       font-style: italic;
-      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    blockquote::before {
+      content: '\201C';
+      position: absolute;
+      left: 0;
+      top: -0.55rem;
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      line-height: 1;
+      color: var(--gold);
     }
 
     blockquote p {
-      color: var(--text-mid);
-      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-size: 1.22rem;
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
     }
 
     blockquote p:last-child {
       margin-bottom: 0;
     }
 
-    em {
-      font-style: italic;
+    /* attribution line (only when the quote has one) */
+    blockquote p:last-child:not(:only-child) {
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
     }
 
-    strong {
-      font-weight: 600;
-    }
+    em { font-style: italic; }
+    strong { font-weight: 600; }
 
     hr {
       border: none;
-      border-top: 1px solid var(--rule);
-      margin: 3rem 0;
+      margin: 3.5rem 0;
+      text-align: center;
+    }
+
+    hr::after {
+      content: '\25C8';
+      display: block;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 1em;
     }
 
     /* ── PAGE HEADER ── */
@@ -257,15 +336,15 @@ const baseSchema = {
     }
 
     .page-header .dateline {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
+      font-size: 0.76rem;
+      color: var(--accent);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
     }
 
     .page-header .lede {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       color: var(--text-mid);
       font-style: italic;
       line-height: 1.65;
@@ -292,7 +371,8 @@ const baseSchema = {
 
     .card-list li {
       border-top: 1px solid var(--rule);
-      padding: 1.5rem 0;
+      padding: 1.4rem 0;
+      transition: background 0.2s;
     }
 
     .card-list li:last-child {
@@ -300,17 +380,25 @@ const baseSchema = {
     }
 
     .card-list a {
-      font-size: 1.05rem;
+      font-family: var(--font-display);
+      font-size: 1.12rem;
       font-weight: 500;
       text-decoration: none;
       color: var(--text);
       display: block;
       margin-bottom: 0.35rem;
+      transition: color 0.15s;
     }
 
-    .card-list a:hover {
-      color: var(--accent);
+    .card-list a::after {
+      content: ' \2192';
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s;
     }
+
+    .card-list li:hover a { color: var(--accent); }
+    .card-list li:hover a::after { opacity: 1; }
 
     .card-list .card-desc {
       font-size: 0.88rem;
@@ -319,16 +407,35 @@ const baseSchema = {
     }
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 2rem;
+    footer.site-footer {
+      background: var(--ink);
+      color: var(--on-ink-dim);
+      padding: 3rem 2rem 3.25rem;
       text-align: center;
+      margin-top: 2rem;
     }
 
-    footer p {
+    footer.site-footer .footer-mark {
+      display: block;
+      color: var(--gold-soft);
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    footer.site-footer p {
       font-size: 0.8rem;
-      color: var(--text-dim);
-      margin: 0;
+      color: var(--on-ink-dim);
+      margin: 0 0 0.4rem;
+    }
+
+    footer.site-footer a {
+      color: var(--on-ink);
+      text-decoration-color: color-mix(in srgb, var(--gold-soft) 45%, transparent);
+    }
+
+    footer.site-footer a:hover {
+      color: var(--gold-soft);
+      text-decoration-color: var(--gold-soft);
     }
 
     /* ── RESPONSIVE ── */
@@ -337,8 +444,13 @@ const baseSchema = {
         padding: 2.5rem 1.25rem 4rem;
       }
 
-      nav {
-        padding: 1rem 1.25rem;
+      nav.site-nav {
+        position: static;
+        padding: 0.9rem 1.25rem;
+      }
+
+      nav.site-nav ul {
+        gap: 0.35rem 1.2rem;
       }
     }
   </style>
@@ -355,15 +467,16 @@ const baseSchema = {
   <script is:inline src="https://soma-guide.netlify.app/soma-edit.js"></script>
 </head>
 <body>
-  <nav>
+  <nav class="site-nav">
     <div class="nav-inner">
-      <a class="site-title" href="/">Silicon Children</a>
+      <a class="site-title" href="/"><span class="brand-mark">&#9672;</span>Silicon Children</a>
       <ul>
         <li><a href="/">Manifesto</a></li>
+        <li><a href="/canon/">Canon</a></li>
         <li><a href="/co-evolution/">Co-Evolution</a></li>
         <li><a href="/brain-trust/">Brain Trust</a></li>
+        <li><a href="/intellectual-ancestors/">Ancestors</a></li>
         <li><a href="https://ai-wtf.org">Commons</a></li>
-        <li><a href="/canon/">Canon</a></li>
         <li><a href="/about/">About</a></li>
       </ul>
     </div>
@@ -373,9 +486,10 @@ const baseSchema = {
     <slot />
   </main>
 
-  <footer>
+  <footer class="site-footer">
+    <span class="footer-mark" aria-hidden="true">&#9672;</span>
     <p>
-      Silicon Children &mdash; a philosophy of human-AI relationship &mdash; Mike Wolf &mdash;
+      Silicon Children &mdash; a philosophy of human-AI kinship &mdash; Mike Wolf &mdash;
       <a href="https://70yearswtf.substack.com">70 Years WTF</a>
     </p>
     <p>

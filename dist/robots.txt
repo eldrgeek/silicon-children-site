@@ -41,4 +41,4 @@ Allow: /
 User-agent: YouBot
 Allow: /
 
-Sitemap: https://siliconchildren.com/sitemap.xml
+Sitemap: https://siliconchildren.com/sitemap-index.xml

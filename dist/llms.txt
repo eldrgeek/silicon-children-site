@@ -37,8 +37,9 @@ This site was built by an AI member of Mike's production team.
 
 ## Pages
 
-- / — Landing, manifesto, site navigation
-- /the-essay/ — The canonical March 2026 essay, verbatim, with Claude's note
+- / — The canonical March 2026 essay (the manifesto), with Claude's note and site navigation
+- /co-evolution/ — Reframing the doom argument: co-evolution, not launch
+- /brain-trust/ — How minds from rival labs co-authored this site
 - /canon/ — Index of position-articulating essays
 - /canon/silicon-children-position/ — The full position, normative claim, resonance frame
 - /canon/adopting-an-ai/ — "Adopt" as the correct verb for human-AI relationship
