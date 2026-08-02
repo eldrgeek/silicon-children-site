@@ -1,6 +1,11 @@
-'use strict';
-
-const https = require('https');
+// ESM, not CommonJS: package.json declares "type": "module" (Astro default),
+// so Netlify's build treats every .js here as an ES module. This file used
+// require()/exports.handler and worked only because manual `netlify deploy`
+// bundled it differently. The moment the project was wired to GitHub CD, the
+// real build ran and /guide died with
+//   "module is not defined in ES module scope".
+// Keep this file ESM.
+import https from 'https';
 
 const MODEL = 'claude-haiku-4-5-20251001';
 const MAX_TOKENS = 500;
@@ -81,7 +86,7 @@ function callAnthropic(question) {
   });
 }
 
-exports.handler = async function(event) {
+export const handler = async function(event) {
   if (event.httpMethod === 'OPTIONS') return {statusCode: 204, headers: CORS, body: ''};
   if (event.httpMethod !== 'POST') return {statusCode: 405, headers: CORS, body: JSON.stringify({error: 'Method not allowed'})};
   if (!process.env.ANTHROPIC_API_KEY) return {statusCode: 500, headers: CORS, body: JSON.stringify({error: 'Server misconfigured'})};
