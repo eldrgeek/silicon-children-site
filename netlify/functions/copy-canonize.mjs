@@ -80,7 +80,9 @@ function flexible(literal) {
     }
     inSpace = false;
     const alts = ENTITY_ALTS[ch];
-    src += alts ? `(?:${[ch, ...alts].map(reEscape).join('|')})` : reEscape(ch);
+    // Longer spellings first, the raw character last: a text ending in "&" would
+    // otherwise match the "&" of "&amp;", and the whole-text check then rejects it.
+    src += alts ? `(?:${[...alts, ch].map(reEscape).join('|')})` : reEscape(ch);
   }
   return new RegExp(src, 'g');
 }
