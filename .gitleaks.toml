@@ -1,0 +1,21 @@
+title = "silicon-children-site gitleaks config"
+
+[extend]
+useDefault = true
+
+# Narrow, VALUE-scoped allow — not a path allow, not a rule allow.
+#
+# The Supabase publishable key for the shared SOMA Auth project
+# (omfwcodoimjmbrhssvfl) is public by design: client-safe, RLS gates every
+# table, and it ships in every SOMA Auth client. The §17 Live Edit files
+# (public/js/soma-auth-config.js, netlify/functions/copy-canonize.mjs) carry it
+# as a literal, and gitleaks' generic-api-key rule flags that shape. Only this
+# exact value is allowed; any other secret-shaped string still trips the gate.
+#
+# Added 2026-09-16 (Mike Wolf's estate; Claude Opus 5, CCc), from the house
+# template soma-platform/.gitleaks.toml.
+[allowlist]
+description = "SOMA Auth omfwcodoimjmbrhssvfl: publishable key (public by design)"
+regexes = [
+  '''sb_publishable_vi2qDWjozUJ5mi9dwirkLA_rj6UaqLf'''
+]

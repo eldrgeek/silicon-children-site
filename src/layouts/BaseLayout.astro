@@ -454,17 +454,15 @@ const baseSchema = {
       }
     }
   </style>
-  <link rel="stylesheet" href="https://vpsmikewolf.duckdns.org/feedback-svc/soma-feedback.css">
-  <script src="https://vpsmikewolf.duckdns.org/feedback-svc/soma-feedback.js" data-endpoint="https://vpsmikewolf.duckdns.org/feedback-svc/feedback" data-site="silicon-children-site" defer></script>
-  <!-- SOMA in-place editing -->
-  <script is:inline src="https://soma-guide.netlify.app/soma-owner.js"></script>
-  <script is:inline>
-    window.SomaEditConfig = {
-      siteId: 'silicon-children',
-      feedbackUrl: '/.netlify/functions/feedback',
-    };
-  </script>
-  <script is:inline src="https://soma-guide.netlify.app/soma-edit.js"></script>
+  <!-- SOMA feedback chip, same-origin (SOMA/standards/soma-feedback-proxy).
+       Until 2026-09-16 the chip loaded from vpsmikewolf.duckdns.org/feedback-svc/,
+       and that legacy hostname now answers every /feedback-svc/ path with an HTML
+       page, so the chip never loaded. The assets are served from this site and
+       submissions go through netlify/functions/soma-feedback.cjs. -->
+  <link rel="stylesheet" href="/vendor/soma-feedback/soma-feedback.css">
+  <script is:inline src="/vendor/soma-feedback/soma-feedback.js"
+          data-endpoint="/.netlify/functions/soma-feedback"
+          data-site="silicon-children-site" defer></script>
 </head>
 <body>
   <nav class="site-nav">
@@ -508,11 +506,77 @@ const baseSchema = {
       theme: { primary: '#c9a96e' },
       endpoints: {
         ask: '/.netlify/functions/guide',
-        feedback: '/.netlify/functions/feedback',
+        feedback: '/.netlify/functions/feedback',   // netlify/functions/feedback.mjs forwards to the feedback service
       },
     };
   </script>
   <script is:inline src="/soma-manager.js"></script>
-  <!-- SOMA AI Manager — soma-owner.js hook: load soma-owner.js before this script to enable Owner Panel -->
+  <!--
+    SOMA §17 / §17a Live Edit — admin bootstrap (SOMA/standards/soma-live-edit).
+    Mike fixes the words on this site by clicking them and typing. "Make
+    canonical" writes the new wording into the .astro source through the GitHub
+    API (netlify/functions/copy-canonize.mjs); the push to main rebuilds the
+    site, so a logged-out visitor reads the edit out of static HTML.
+    Nothing below loads for an ordinary visitor: no Supabase client, no auth
+    config, no query, no fetch.
+    Admin path: ?edit=1 or #edit, an existing SOMA Auth session in this
+    browser, or the sticky flag this sets once you have opted in (clear with
+    ?edit=0). /js/live-edit.js is byte-identical to mike-wolf.com's and the
+    Library's copy (ADOPT.md §5c); everything site-specific is in the object
+    below. Replaced soma-edit.js on 2026-09-16: its save endpoint,
+    /.netlify/functions/feedback, never existed here, so no edit ever saved.
+    Quotations of other people are marked data-user-content in the pages, so
+    an admin cannot canonize an edit to somebody else's words.
+  -->
+  <script is:inline>
+  (function () {
+    var K = 'sc-live-edit';
+    var q = location.search + location.hash;
+    var on = false;
+    // ?edit=out must still BOOT (so the engine can sign you out) but must not
+    // re-arm the sticky flag.
+    var wantsOut = /[?#&]edit=out\b/.test(q);
+    try {
+      if (/[?#&]edit=0\b/.test(q) || wantsOut) localStorage.removeItem(K);
+      else if (/[?#&]edit(=1)?\b/.test(q)) localStorage.setItem(K, '1');
+      on = wantsOut || localStorage.getItem(K) === '1';
+      // A live session counts too, so a signed-in non-admin gets a panel with
+      // a Sign out button instead of a page that quietly ignores them.
+      if (!on) {
+        [localStorage, sessionStorage].forEach(function (store) {
+          if (on || !store) return;
+          for (var i = 0; i < store.length; i++) {
+            var k = store.key(i);
+            if (k && k.indexOf('sb-') === 0 && k.indexOf('-auth-token') > 0) { on = true; return; }
+          }
+        });
+      }
+    } catch (e) { /* private mode: stay off, cost nothing */ }
+    if (!on) return;
+    window.SOMA_LIVE_EDIT = {
+      app: 'silicon-children',
+      appLabel: 'Silicon Children',
+      stickyKey: K,
+      api: '/api/copy-canonize',
+      skip: ['blockquote', '.site-nav', '[id^="smgr-"]', '.soma-feedback-root'],
+      userContentMessage: 'Not editable — that is a quotation of someone else, not site copy.'
+    };
+    var l = document.createElement('link');
+    l.rel = 'stylesheet'; l.href = '/css/live-edit.css'; document.head.appendChild(l);
+    // Sequential, not parallel: soma-auth.js needs window.supabase and the
+    // config object; live-edit.js needs window.SomaAuth.
+    function js(src, next) {
+      var s = document.createElement('script');
+      s.src = src; s.onload = next || null; document.body.appendChild(s);
+    }
+    js('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js', function () {
+      js('/js/soma-auth-config.js', function () {
+        js('/js/soma-auth.js', function () {
+          js('/js/live-edit.js', function () { window.SomaLiveEdit.init(); });
+        });
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
