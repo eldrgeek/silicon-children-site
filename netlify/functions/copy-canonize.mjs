@@ -91,15 +91,17 @@ const astroText = (s) =>
     .replace(/\{/g, '&#123;').replace(/\}/g, '&#125;');
 
 /* Regions of a source file a visitor never reads as text: the frontmatter,
- * <script> and <style> bodies (JSON-LD repeats the page title), comments, and
- * the inside of tags (attributes). A sentence that only matches in one of these
- * is not the sentence the admin clicked, so those hits are dropped. Without
- * this, "Silicon Children" matched the JSON-LD headline before the <h1>. */
+ * <head> (the engine only walks <body>), <script>, <style> and <title> bodies
+ * (JSON-LD repeats the page title), comments, and the inside of tags
+ * (attributes). A sentence that only matches in one of these is not the
+ * sentence the admin clicked, so those hits are dropped. Without this,
+ * "Silicon Children" matched the JSON-LD headline before the <h1>. */
 function hiddenRanges(text) {
   const ranges = [];
-  const fm = /^﻿?\s*---\r?\n[\s\S]*?\r?\n---/.exec(text);
+  const fm = /^\uFEFF?\s*---\r?\n[\s\S]*?\r?\n---/.exec(text);
   if (fm) ranges.push([0, fm[0].length]);
-  for (const re of [/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, /<!--[\s\S]*?-->/g, /<[a-zA-Z\/!][^>]*>/g]) {
+  for (const re of [/<head\b[^>]*>[\s\S]*?<\/head\s*>/gi, /<(script|style|title)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,
+                    /<!--[\s\S]*?-->/g, /<[a-zA-Z\/!][^>]*>/g]) {
     for (const m of text.matchAll(re)) ranges.push([m.index, m.index + m[0].length]);
   }
   return ranges;
