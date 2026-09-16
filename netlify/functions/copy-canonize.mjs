@@ -155,9 +155,12 @@ async function gh(token, path, init = {}) {
   return body ? JSON.parse(body) : null;
 }
 
-async function readFile(token, path) {
+// Read at a COMMIT sha, never at the branch name: right after a commit, a read by
+// branch name can return the previous version, and a patch built on that would
+// silently undo the edit before it.
+async function readFile(token, path, sha) {
   try {
-    const r = await gh(token, `/repos/${REPO}/contents/${encodeURI(path)}?ref=${BRANCH}`);
+    const r = await gh(token, `/repos/${REPO}/contents/${encodeURI(path)}?ref=${sha}`);
     return Buffer.from(r.content, 'base64').toString('utf8');
   } catch (e) {
     if (String(e.message).includes('-> 404')) return null;
@@ -166,8 +169,8 @@ async function readFile(token, path) {
 }
 
 // Every .astro file under src/, read from the repo so the list cannot go stale.
-async function allAstroFiles(token) {
-  const tree = await gh(token, `/repos/${REPO}/git/trees/${BRANCH}?recursive=1`);
+async function allAstroFiles(token, sha) {
+  const tree = await gh(token, `/repos/${REPO}/git/trees/${sha}?recursive=1`);
   return (tree.tree || [])
     .filter((t) => t.type === 'blob' && t.path.startsWith('src/') && t.path.endsWith('.astro'))
     .map((t) => t.path);
@@ -210,16 +213,20 @@ export default async (req) => {
   const token = process.env.GITHUB_TOKEN;
   if (!token) return json(500, { ok: false, error: 'GITHUB_TOKEN not configured' });
 
+  // One base commit for the whole operation: every read, the new tree and the
+  // commit's parent all come from it, and the ref update below is not forced.
+  const baseSha = (await gh(token, `/repos/${REPO}/git/ref/heads/${BRANCH}`)).object.sha;
+
   // Route files first, then the layout (nav, footer), then everything else:
   // a route can be wrong, but the string cannot.
   const preferred = [...routeFiles(row.route), LAYOUT];
-  const rest = (await allAstroFiles(token)).filter((f) => !preferred.includes(f));
+  const rest = (await allAstroFiles(token, baseSha)).filter((f) => !preferred.includes(f));
   const candidates = [...preferred, ...rest];
 
   const changes = [];
   const skipped = [];
   for (const path of candidates) {
-    const text = await readFile(token, path);
+    const text = await readFile(token, path, baseSha);
     if (text === null) continue;   // a guessed route file that does not exist
     const r = patch(text, row.original_text, row.new_text, row.occurrence || 0);
     if (!r.changed) { if (r.reason !== 'no-match') skipped.push(`${path}:${r.reason}`); continue; }
@@ -230,8 +237,6 @@ export default async (req) => {
 
   let sha = null;
   if (changes.length) {
-    const ref = await gh(token, `/repos/${REPO}/git/ref/heads/${BRANCH}`);
-    const baseSha = ref.object.sha;
     const baseCommit = await gh(token, `/repos/${REPO}/git/commits/${baseSha}`);
     const tree = [];
     for (const c of changes) {
@@ -255,11 +260,25 @@ export default async (req) => {
         tree: newTree.sha, parents: [baseSha],
       }),
     });
-    await gh(token, `/repos/${REPO}/git/refs/heads/${BRANCH}`, {
-      method: 'PATCH', body: JSON.stringify({ sha: commit.sha }),
-    });
+    try {
+      await gh(token, `/repos/${REPO}/git/refs/heads/${BRANCH}`, {
+        method: 'PATCH', body: JSON.stringify({ sha: commit.sha, force: false }),
+      });
+    } catch (e) {
+      // Someone else moved the branch between our read and our write. Nothing
+      // was published; the row stays a draft, and saying so beats clobbering.
+      if (String(e.message).includes('-> 422')) {
+        return json(409, { ok: false, error: 'the site changed while publishing — publish again' });
+      }
+      throw e;
+    }
     sha = commit.sha;
   }
+
+  // A retry after a lost response finds the source already saying the new
+  // words. That is a source that has caught up (read back, not assumed), so it
+  // retires the row like a fresh commit would.
+  const caughtUp = !sha && skipped.find((s) => s.endsWith(':already-applied'));
 
   // Once the commit lands the source has genuinely caught up, so the row goes
   // straight to `retired` (§17a R4: and it is never promotable again). The
@@ -268,16 +287,16 @@ export default async (req) => {
     method: 'PATCH',
     headers: { prefer: 'return=minimal' },
     body: JSON.stringify(
-      sha
+      sha || caughtUp
         ? { status: 'retired', canonical_at: new Date().toISOString(),
-            retired_at: new Date().toISOString(), note: `commit:${sha}` }
+            retired_at: new Date().toISOString(), note: sha ? `commit:${sha}` : caughtUp }
         : { status: 'canonical', canonical_at: new Date().toISOString(),
             note: `pending:${skipped.join(', ')}` }
     ),
   });
 
   return json(200, {
-    ok: true, committed: Boolean(sha), sha,
+    ok: true, committed: Boolean(sha), sha, alreadyApplied: Boolean(caughtUp),
     files: changes.map((c) => c.path), skipped,
     reason: changes.length ? null : (skipped.join(', ') || 'no candidate files'),
   });
