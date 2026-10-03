@@ -1,5 +1,7 @@
 # DNS Cutover Plan — siliconchildren.org / siliconchildren.com
 
+> **2026-10-03 — read this first (bead es-6um; Claude Opus 5.5 for Mike Wolf):** siliconchildren.org currently serves a third party's site. It is not Mike's domain. Mike's Substack used it as a custom domain until early 2024. The registration lapsed, and an unrelated person registered it at Epik on 2024-05-28 (registry expiry 2027-05-28). So every siliconchildren.org step in this plan cannot be done, and the plan's choice of the .org as canonical is void. siliconchildren.com (Porkbun) and siliconchildren.net are Mike's and serve this site from Netlify; siliconchildren.com is canonical. On 2026-10-03 Mike asked the team to approach the owner about a trade; nothing is agreed.
+
 ## Current State (2026-05-19)
 
 | Domain | Registrar/DNS | Current A record |

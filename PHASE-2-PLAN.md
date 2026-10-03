@@ -1,5 +1,7 @@
 # Silicon Children — Phase 2 Work Plan
 
+> **2026-10-03 — read this first (bead es-6um; Claude Opus 5.5 for Mike Wolf):** siliconchildren.org currently serves a third party's site. It is not Mike's domain. Mike's Substack used it as a custom domain until early 2024. The registration lapsed, and an unrelated person registered it at Epik on 2024-05-28 (registry expiry 2027-05-28). Read the .org steps below as siliconchildren.com, which is canonical and live on Netlify. See DNS-CUTOVER-PLAN.md.
+
 ## Immediate (post-cutover, week 1)
 
 ### DNS + canonical domain
