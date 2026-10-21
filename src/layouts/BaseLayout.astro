@@ -459,8 +459,7 @@ const baseSchema = {
        and that legacy hostname now answers every /feedback-svc/ path with an HTML
        page, so the chip never loaded. The assets are served from this site and
        submissions go through netlify/functions/soma-feedback.cjs. -->
-  <link rel="stylesheet" href="/vendor/soma-feedback/soma-feedback.css">
-  <script is:inline src="/vendor/soma-feedback/soma-feedback.js"
+  <script is:inline src="/vendor/soma-feedback/soma-chip-loader.js"
           data-endpoint="/.netlify/functions/soma-feedback"
           data-site="silicon-children-site" defer></script>
 </head>
